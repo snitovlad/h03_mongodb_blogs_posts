@@ -7,6 +7,4 @@ export type BlogViewModel = {
     websiteUrl: string
     createdAt: string
     isMembership: boolean
-    //_id: ObjectId
-
 }
