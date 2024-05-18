@@ -2,7 +2,7 @@ import { Collection, Db, MongoClient } from "mongodb";
 import { BlogDBType } from "./db-type";
 import { SETTINGS } from "../settings";
 
-let client: MongoClient = {} as MongoClient //теперь это наша база данных
+export let client: MongoClient = {} as MongoClient //теперь это наша база данных
 
 //переменные вынесены наружу, чтобы были доступны в других файлах
 export let db: Db = {} as Db
