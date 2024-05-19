@@ -41,7 +41,7 @@ import { blogsMongoRepository } from './blogs-mongo-repository'
 
 export const createBlogController = async (
     req: RequestWithBody<CreateBlogModel>,
-    res: Response<BlogViewModel | ErrorsViewModel | { error?: string } | null>) => {
+    res: Response<BlogViewModel | null | ErrorsViewModel | { error?: string }>) => {
 
     // const errors = inputValidation(req.body)
     // if (errors.errorsMessages.length) {
