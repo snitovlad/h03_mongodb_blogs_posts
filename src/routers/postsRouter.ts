@@ -10,6 +10,7 @@ import {
 } from '../middlewares/post-validation-middleware';
 import { inputCheckErrorsMiddleware } from '../middlewares/input-check-errors-middleware';
 import { authMiddleware } from '../middlewares/auth-middleware';
+import { inputIdValidator } from '../middlewares/input-id-validator';
 
 
 export const postsRouter = Router()
@@ -25,14 +26,18 @@ postsRouter.post('/',
     inputCheckErrorsMiddleware,
     createPostController)
 
-postsRouter.get('/:id', findPostController)
+postsRouter.get('/:id',
+    inputIdValidator(),
+    findPostController)
 
 postsRouter.delete('/:id',
     authMiddleware,
+    inputIdValidator(),
     deletePostController)
 
 postsRouter.put('/:id',
     authMiddleware,
+    inputIdValidator(),
     inputTitlePostValidator(),
     inputShortDescriptionPostValidator(),
     inputContentPostValidator(),
