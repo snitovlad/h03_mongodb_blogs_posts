@@ -1,9 +1,11 @@
-import { MongoClient } from "mongodb"
+import { BlogDBType } from './../src/db/db-type';
+import { MongoClient, ObjectId } from "mongodb"
 import { MongoMemoryServer } from 'mongodb-memory-server'
-import { blogCollection, client, connectToDB } from "../src/db/mongo-db"
+import { blogCollection, client, connectToDB, postCollection } from "../src/db/mongo-db"
 import { CreateBlogModel } from "../src/models/blogs-models/CreateBlogModel"
 import { SETTINGS } from "../src/settings"
 import { req } from "./test-helpers"
+import { CreatePostModel } from "../src/models/posts-models/CreatePostModel"
 
 
 let testServer: MongoMemoryServer
@@ -24,7 +26,7 @@ export const connectToTestDb = async () => {
 
 export const clearTestDb = async () => {
     await blogCollection.deleteMany({})
-    //await postCollection.deleteMany({})        
+    await postCollection.deleteMany({})
     console.log('Local MongoDB is empty')
 }
 
@@ -34,9 +36,26 @@ export const closeTestDb = async () => {
     console.log('Local MongoDB closed')
 }
 
+
 export const createNewBlog: CreateBlogModel = {
     name: 'name1',
     description: 'description1',
     websiteUrl: 'https://it.com'
 }
+export const createNewEntity = async (newBlog: CreateBlogModel | CreatePostModel, path: string) => {
+    return await req
+        .post(path)
+        .set({ 'authorization': 'Basic ' + SETTINGS.ADMIN_AUTH_FOR_TESTS }) //авторизация
+        .send(newBlog) // отправка данных           
+        .expect(201)
+}
 
+export const createNewPost = (id: string): CreatePostModel => {
+    const newPost = {
+        title: 'newTitle',
+        shortDescription: 'newShortDescription',
+        content: 'newContent',
+        blogId: id
+    }
+    return newPost
+}

@@ -1,14 +1,10 @@
 import { req } from './test-helpers';
 import { SETTINGS } from '../src/settings'
-import { db, setDB } from '../src/db/db'
-//import { dataset1 } from './datasets'
 import { CreateBlogModel } from '../src/models/blogs-models/CreateBlogModel'
 import { UpdateBlogModel } from '../src/models/blogs-models/UpdateBlogModel'
-import { clearTestDb, closeTestDb, connectToTestDb, createNewBlog } from './mongo-datasets';
+import { clearTestDb, closeTestDb, connectToTestDb, createNewBlog, createNewEntity } from './mongo-datasets';
 import { ObjectId } from 'mongodb';
 
-
-//простой тест:
 
 describe('/blogs', () => {
 
@@ -25,7 +21,6 @@ describe('/blogs', () => {
     })
 
     it('should return 200 and empty array', async () => {
-        setDB()
         const res = await req
             .get(SETTINGS.PATH.BLOGS)
             .expect(200)
@@ -34,17 +29,15 @@ describe('/blogs', () => {
     })
 
     it('should get not empty array', async () => {
+
+        //создаем новый блог
         const newBlog = createNewBlog
-        const res = await req
-            .post(SETTINGS.PATH.BLOGS)
-            .set({ 'authorization': 'Basic ' + SETTINGS.ADMIN_AUTH_FOR_TESTS }) //авторизация
-            .send(newBlog) // отправка данных           
-            .expect(201)
+        const res = await createNewEntity(newBlog, SETTINGS.PATH.BLOGS)
 
         const res1 = await req
             .get(SETTINGS.PATH.BLOGS)
             .expect(200)
-        console.log(res1.body)
+        //console.log(res1.body)
         expect(res1.body.length).toBe(1)
         expect(res1.body[0]).toEqual(res.body)
     })
@@ -59,11 +52,7 @@ describe('/blogs', () => {
     //создание нового блога
     it('should create blog', async () => {
         const newBlog = createNewBlog
-        const res = await req
-            .post(SETTINGS.PATH.BLOGS)
-            .set({ 'authorization': 'Basic ' + SETTINGS.ADMIN_AUTH_FOR_TESTS }) //авторизация
-            .send(newBlog) // отправка данных           
-            .expect(201)
+        const res = await createNewEntity(newBlog, SETTINGS.PATH.BLOGS)
 
         expect(res.body.name).toBe(newBlog.name)
         expect(res.body.description).toBe(newBlog.description)
@@ -71,7 +60,6 @@ describe('/blogs', () => {
     })
 
     it('shouldn\'t create blog with incorrect input data', async () => {
-        // setDB()
 
         const newBlog: CreateBlogModel = {
             name: 'name1',
@@ -90,7 +78,7 @@ describe('/blogs', () => {
     })
 
     it('shouldn\'t create blog with incorrect input name', async () => {
-        //setDB()
+
         const newBlog: CreateBlogModel = {
             name: '   ', //incorrect input data
             description: 'description1',
@@ -110,11 +98,7 @@ describe('/blogs', () => {
     it(`shouldn't update blog with incorrect input data`, async () => {
         //создаем новый блог
         const newBlog = createNewBlog
-        const res = await req
-            .post(SETTINGS.PATH.BLOGS)
-            .set({ 'authorization': 'Basic ' + SETTINGS.ADMIN_AUTH_FOR_TESTS }) //авторизация
-            .send(newBlog) // отправка данных           
-            .expect(201)
+        const res = await createNewEntity(newBlog, SETTINGS.PATH.BLOGS)
 
         //обновляем
         const updateBlog: UpdateBlogModel = {
@@ -139,11 +123,7 @@ describe('/blogs', () => {
     it(`shouldn't update blog with incorrect input data`, async () => {
         //создаем новый блог
         const newBlog = createNewBlog
-        const res = await req
-            .post(SETTINGS.PATH.BLOGS)
-            .set({ 'authorization': 'Basic ' + SETTINGS.ADMIN_AUTH_FOR_TESTS }) //авторизация
-            .send(newBlog) // отправка данных           
-            .expect(201)
+        const res = await createNewEntity(newBlog, SETTINGS.PATH.BLOGS)
 
         //обновляем
         const updateBlog: UpdateBlogModel = {
@@ -189,11 +169,7 @@ describe('/blogs', () => {
     it(`should update video with correct input data`, async () => {
         //создаем новый блог
         const newBlog = createNewBlog
-        const res = await req
-            .post(SETTINGS.PATH.BLOGS)
-            .set({ 'authorization': 'Basic ' + SETTINGS.ADMIN_AUTH_FOR_TESTS }) //авторизация
-            .send(newBlog) // отправка данных           
-            .expect(201)
+        const res = await createNewEntity(newBlog, SETTINGS.PATH.BLOGS)
 
         //обновляем
         const updateBlog: UpdateBlogModel = {
@@ -222,11 +198,7 @@ describe('/blogs', () => {
     it(`should delete blog and return empty array`, async () => {
         //создаем новый блог
         const newBlog = createNewBlog
-        const res = await req
-            .post(SETTINGS.PATH.BLOGS)
-            .set({ 'authorization': 'Basic ' + SETTINGS.ADMIN_AUTH_FOR_TESTS }) //авторизация
-            .send(newBlog) // отправка данных           
-            .expect(201)
+        const res = await createNewEntity(newBlog, SETTINGS.PATH.BLOGS)
 
         //проверили, что блог есть в базе данных
         await req
@@ -249,11 +221,7 @@ describe('/blogs', () => {
         const nonExitingId = (new ObjectId()).toString()
         //создаем новый блог
         const newBlog = createNewBlog
-        const res = await req
-            .post(SETTINGS.PATH.BLOGS)
-            .set({ 'authorization': 'Basic ' + SETTINGS.ADMIN_AUTH_FOR_TESTS }) //авторизация
-            .send(newBlog) // отправка данных           
-            .expect(201)
+        const res = await createNewEntity(newBlog, SETTINGS.PATH.BLOGS)
 
         //проверили, что блог есть в базе данных
         await req

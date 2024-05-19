@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import { CreateBlogModel } from '../../models/blogs-models/CreateBlogModel'
 import { ErrorsViewModel } from '../../models/errors-models/ErrorsViewModel'
-//import { websiteUrlRegex } from '../../helper/helper'
 import { BlogViewModel } from '../../models/blogs-models/BlogViewModel'
 import { RequestWithBody } from '../../models/requestTypes'
 import { blogsMongoRepository } from './blogs-mongo-repository'

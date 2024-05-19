@@ -11,4 +11,3 @@ export const req = agent(app) //обозвали req (с помощью него
 // const getRequest = () => {
 //     return request(app)
 // }
-

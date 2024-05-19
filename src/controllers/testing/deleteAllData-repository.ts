@@ -11,10 +11,4 @@ export const deleteAllDataRepository = {
             throw new Error('Failed to delete all data')
         }
     }
-    // async deleteAllData() {
-    // const deleteInfoBlog = await blogCollection.deleteMany({})
-    // const deleteInfoPost = await postCollection.deleteMany({})
-
-    //     return deleteInfo.deletedCount === 1 //eсли 1 - значит true
-    // }
 }
