@@ -1,5 +1,5 @@
 import { Collection, Db, MongoClient } from "mongodb";
-import { BlogDBType } from "./db-type";
+import { BlogDBType, PostDBType } from "./db-type";
 import { SETTINGS } from "../settings";
 
 export let client: MongoClient = {} as MongoClient //теперь это наша база данных
@@ -7,7 +7,7 @@ export let client: MongoClient = {} as MongoClient //теперь это наш�
 //переменные вынесены наружу, чтобы были доступны в других файлах
 export let db: Db = {} as Db
 export let blogCollection: Collection<BlogDBType> = {} as Collection<BlogDBType>
-//export let postCollection: Collection<PostDBType> = db.collection<any>(SETTING.POST_COLLECTION_NAME)
+export let postCollection: Collection<PostDBType> = {} as Collection<PostDBType>
 
 //ф-ция подключения к базе данных (подключаем внутри, чтобы делать разные ссылки в разный момент - удобно для тестов)
 export const connectToDB = async (MONGO_URL: string) => {
@@ -16,7 +16,7 @@ export const connectToDB = async (MONGO_URL: string) => {
         db = client.db(SETTINGS.DB_NAME)  //к какой базе данных подключаемся
 
         blogCollection = db.collection<BlogDBType>(SETTINGS.BLOG_COLLECTION_NAME)  //создаем коллекцию
-        //postCollection = db.collection<PostDBType>(SETTINGS.POST_COLLECTION_NAME)
+        postCollection = db.collection<PostDBType>(SETTINGS.POST_COLLECTION_NAME)
 
         await client.connect()  //инициализируем connect() чтобы если строка подключения не правильная упало здесь
         return true

@@ -10,7 +10,7 @@ export const SETTINGS = {
     PATH: {
         BLOGS: '/blogs',
         POSTS: '/posts',
-        TESTING: '/testing'
+        TESTING: '/testing/all-data'
     },
     DB_NAME: process.env.DB_NAME || '',
     BLOG_COLLECTION_NAME: process.env.BLOG_COLLECTION_NAME || '',

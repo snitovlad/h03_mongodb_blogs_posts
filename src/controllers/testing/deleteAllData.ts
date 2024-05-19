@@ -1,9 +1,12 @@
 import { Request, Response } from 'express'
-import { db } from '../../db/db';
+import { deleteAllDataRepository } from './deleteAllData-repository';
 
 export const deleteAllData = (req: Request, res: Response) => {
-    db.blogs = [];
-    db.posts = []
-    res.sendStatus(204)
-}
 
+    try {
+        deleteAllDataRepository.deleteAllData()
+        res.sendStatus(204)
+    } catch (e) {
+        res.sendStatus(500)
+    }
+}

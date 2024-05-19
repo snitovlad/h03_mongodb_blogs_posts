@@ -1,12 +1,10 @@
 import { ObjectId } from "mongodb";
-//import { db } from "../../db/db";
 import { blogCollection } from "../../db/mongo-db";
-import { createId, currentDateISOString } from "../../helper/helper";
+import { currentDateISOString } from "../../helper/helper";
 import { BlogViewModel } from "../../models/blogs-models/BlogViewModel";
 import { CreateBlogModel } from "../../models/blogs-models/CreateBlogModel";
 import { UpdateBlogModel } from "../../models/blogs-models/UpdateBlogModel";
 import { BlogDBType } from "../../db/db-type";
-import { OutputBlogType } from "../../input-output-types/blogs-types/output-blog-type";
 
 export const blogsMongoRepository = {
 
@@ -40,8 +38,8 @@ export const blogsMongoRepository = {
     },
 
     async deleteBlog(id: string): Promise<boolean> {
-        const foundBlog = await this.findBlog(id)
 
+        //const foundBlog = await this.findBlog(id)
         // if (foundBlog) {
         //     await blogCollection.deleteOne(foundBlog)
         //     return true

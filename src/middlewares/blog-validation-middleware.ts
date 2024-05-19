@@ -1,7 +1,4 @@
-import { body, param } from "express-validator";
-
-export const inputIdValidator = () => param('id')
-    .isMongoId().withMessage('Error!! Invalid id')
+import { body } from "express-validator";
 
 export const inputNameBlogValidator = () => body('name')
     .exists().withMessage('Error!! Field is not exist')

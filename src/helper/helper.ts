@@ -23,12 +23,13 @@ export function createId() {
 
 export function filterOfFirstErrorInEveryField(errors: any[]) {
     let allFields = errors.map(el => el.path)
-    let fields: string[] = []
-    for (let i = 0; i < allFields.length; i++) {
-        if (fields.indexOf(allFields[i]) < 0) {
-            fields.push(allFields[i])
-        }
-    }
+    //let fields: string[] = []
+    // for (let i = 0; i < allFields.length; i++) {
+    //     if (fields.indexOf(allFields[i]) < 0) {
+    //         fields.push(allFields[i])
+    //     }
+    // }
+    let fields: string[] = [...new Set(allFields)] //убираем из массива повторяющиеся элементы
     let errorCorrect: any[] = []
     for (let i = 0; i < fields.length; i++) {
         let errorObj = errors.filter(e => e.path === fields[i])[0]

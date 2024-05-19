@@ -17,13 +17,13 @@ export const db: DBType = {
     ],
     posts: [
         {
-            //id: "string",
+            _id: new ObjectId(),
             title: "string",
             shortDescription: "string",
             content: "string",
-            blogId: new ObjectId(),
+            blogId: "string",
             blogName: "string",
-            _id: new ObjectId()
+            createdAt: "string",
         }
     ]
 }
